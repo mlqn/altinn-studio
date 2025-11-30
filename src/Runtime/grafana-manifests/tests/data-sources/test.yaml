@@ -1,0 +1,25 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: external-grafana-test
+  namespace: grafana
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: external-grafana
+  datasource:
+    access: proxy
+    isDefault: true
+    uid: grafana-testdata-datasource
+    name: grafana-testdata-datasource
+    type: testdata
+    jsonData:
+      scenarioSettings:
+        csv:
+          series: |
+            time,value,__name__
+            now-5m,1,A-series
+            now-4m,2,B-series
+            now-3m,3,C-series
+            now-2m,4,D-series
+            now-1m,5,E-series

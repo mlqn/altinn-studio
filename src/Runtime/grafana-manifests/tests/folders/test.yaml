@@ -1,0 +1,10 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: external-grafana-test
+  namespace: grafana
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: external-grafana
+  title: Test

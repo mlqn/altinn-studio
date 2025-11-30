@@ -1,0 +1,326 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: external-grafana-test
+  namespace: grafana
+spec:
+  allowCrossNamespaceImport: true
+  name: Test
+  folderRef: external-grafana-test
+  instanceSelector:
+    matchLabels:
+      dashboards: external-grafana
+  interval: 10s
+  rules:
+    - uid: 5xx-failed-requests-test
+      title: 5xx failed requests
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: grafana-testdata-datasource
+          model:
+            channel: random-2s-stream
+            csvContent: ""
+            errorSource: plugin
+            errorType: server_panic
+            intervalMs: 1000
+            levelColumn: false
+            lines: 10
+            maxDataPoints: 43200
+            refId: A
+            scenarioId: exponential_heatmap_bucket_data
+            seriesCount: 1
+            stringInput: datasources
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: last
+            refId: B
+            type: reduce
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 1000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: B
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      noDataState: NoData
+      execErrState: Error
+      annotations:
+        __dashboardUid__: b5d6978c-0131-426a-b798-8e7c920768fc
+        __panelId__: "1"
+        summary: '`{{ index $labels "__name__" }}` had 5xx failed requests in the last 5m'
+      labels:
+        Type: Test
+      isPaused: false
+    - uid: server-exceptions-test
+      title: Server exceptions
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: grafana-testdata-datasource
+          model:
+            channel: random-2s-stream
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: A
+            scenarioId: exponential_heatmap_bucket_data
+            stringInput: datasources
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: last
+            refId: B
+            type: reduce
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 1000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: B
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      noDataState: NoData
+      execErrState: Error
+      annotations:
+        summary: '`{{ index $labels "__name__" }}` had exceptions in the last 5m'
+      labels:
+        Type: Test
+      isPaused: false
+    - uid: 5xx-failed-requests-2-test
+      title: 5xx failed requests (copy)
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: grafana-testdata-datasource
+          model:
+            channel: random-2s-stream
+            csvContent: ""
+            errorSource: plugin
+            errorType: server_panic
+            intervalMs: 1000
+            levelColumn: false
+            lines: 10
+            maxDataPoints: 43200
+            refId: A
+            scenarioId: linear_heatmap_bucket_data
+            seriesCount: 1
+            stringInput: datasources
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: last
+            refId: B
+            type: reduce
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: B
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      noDataState: NoData
+      execErrState: Error
+      annotations:
+        summary: '`{{ index $labels "__name__" }}` had 5xx failed requests in the last 5m'
+      labels:
+        Type: Test
+      isPaused: false
+    - uid: failed-process-next-requests-test
+      title: Failed process next requests
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: grafana-testdata-datasource
+          model:
+            channel: random-2s-stream
+            csvContent: ""
+            errorSource: plugin
+            errorType: server_panic
+            intervalMs: 1000
+            levelColumn: false
+            lines: 10
+            maxDataPoints: 43200
+            refId: A
+            scenarioId: exponential_heatmap_bucket_data
+            seriesCount: 1
+            stringInput: datasources
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: last
+            refId: B
+            type: reduce
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: B
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      noDataState: NoData
+      execErrState: Error
+      annotations:
+        summary: '`{{ index $labels "__name__" }}` had slow requests in the last 5m'
+      labels:
+        Type: Test
+      isPaused: false
