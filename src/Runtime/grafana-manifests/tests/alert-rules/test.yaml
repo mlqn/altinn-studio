@@ -91,6 +91,7 @@ spec:
         __panelId__: "1"
         summary: '`{{ index $labels "__name__" }}` had 5xx failed requests in the last 5m'
       labels:
+        RuleId: failed-process-next-requests
         Type: Test
       isPaused: false
     - uid: server-exceptions-test
@@ -164,6 +165,7 @@ spec:
       annotations:
         summary: '`{{ index $labels "__name__" }}` had exceptions in the last 5m'
       labels:
+        RuleId: failed-process-next-requests
         Type: Test
       isPaused: false
     - uid: 5xx-failed-requests-2-test
@@ -243,6 +245,7 @@ spec:
       annotations:
         summary: '`{{ index $labels "__name__" }}` had 5xx failed requests in the last 5m'
       labels:
+        RuleId: failed-process-next-requests
         Type: Test
       isPaused: false
     - uid: failed-process-next-requests-test
@@ -322,5 +325,6 @@ spec:
       annotations:
         summary: '`{{ index $labels "__name__" }}` had slow requests in the last 5m'
       labels:
+        RuleId: failed-process-next-requests
         Type: Test
       isPaused: false

@@ -24,17 +24,19 @@ setup-cluster:
 	kubectl create namespace grafana
 	kubectl apply -f grafana.yaml
 
+	kubectl apply -f service.yaml
+
 	# kubectl config use-context kind-$(KIND_NAME)
 
 setup-infra:
 	# Wait for Grafana Operator to be ready
 	# kubectl wait --for=condition=GrafanaReady grafana/grafana --timeout=5m
 
-	# kubectl create namespace runtime-gateway
+	kubectl create namespace runtime-gateway
 
 	# kubectl apply -k infra/tt02
 	# kubectl create secret generic external-grafana-altinn-studio-gateway-url --from-literal=url="http://localhost:5062/api/v1/alerts?org=ttd&env=tt02" -n grafana
-	kubectl create secret generic external-grafana-altinn-studio-gateway-token --from-literal=token="token" -n grafana
+	kubectl create secret generic external-grafana-altinn-studio-gateway-sa-token --from-literal=token="token" -n runtime-gateway
 	kubectl create secret generic external-grafana-altinn-slack-webhook --from-literal=url="http://localhost" -n grafana
 
 setup-manifests:

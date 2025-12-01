@@ -6,4 +6,4 @@ resources:
   #  - data-sources (create it manually to avoid wrong data)
   - dashboards
   - notification-policies
-  - alert-rules
+  #  - alert-rules
