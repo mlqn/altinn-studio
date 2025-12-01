@@ -17,5 +17,5 @@ spec:
     - targetPath: token
       valueFrom:
         secretKeyRef:
-          name: external-grafana-altinn-studio-gateway-token
+          name: external-grafana-altinn-studio-gateway-sa-token
           key: token
