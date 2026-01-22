@@ -1,9 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>Altinn/renovate-config", ":prHourlyLimit4"],
-  "separateMinorPatch": true,
-  "separateMultipleMajor": true,
   "packageRules": [
+    {
+      "matchPaths": ["**"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "service: {{packageFileDirName}}",
+      "automerge": true
+    },
+    {
+      "matchPaths": ["**"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "major updates: {{packageFileDirName}}"
+    },
     {
       "groupName": "LibGit2Sharp dependency",
       "groupSlug": "LibGit2Sharp",
@@ -17,21 +26,6 @@
     {
       "matchFileNames": ["frontend/testing/cypress/**"],
       "ignoreDeps": ["yarn"]
-    },
-    {
-      "matchFileNames": ["src/App/**"],
-      "additionalBranchPrefix": "app/",
-      "commitMessageSuffix": " (app)"
-    },
-    {
-      "matchFileNames": ["src/Runtime/localtest/**"],
-      "additionalBranchPrefix": "localtest/",
-      "commitMessageSuffix": " (localtest)"
-    },
-    {
-      "matchFileNames": ["src/Runtime/pdf3/**"],
-      "additionalBranchPrefix": "pdf3/",
-      "commitMessageSuffix": " (pdf3)"
     },
     {
       "matchFileNames": ["src/App/**"],
@@ -85,5 +79,5 @@
       "enabled": false
     }
   ],
-  "schedule": []
+  "schedule": ["before 5am on monday"]
 }
